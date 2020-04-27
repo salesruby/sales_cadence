@@ -8,10 +8,11 @@
   {{Session::get('error')}}
     </div>
     @endif
+
     @if(Session::has('success'))
 
-    <div class="alert alert-success">
-  {{Session::get('error')}}
+    <div class="alert alert-success mt-3">
+  {{Session::get('success')}}
 
     </div>
     @endif

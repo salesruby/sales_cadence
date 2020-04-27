@@ -48,12 +48,12 @@ class MailLeads extends Command
     {
         $now = date("Y-m-d H:i", strtotime(Carbon::now()->addHour()));
 
-        $emailCadences = EmailCadence::get();
+        $emailCadences = EmailCadence::where('date_string', $now)->orWhere('date_string', '<', $now)->get();
         if($emailCadences !== null){
             
                  
                  
-                 $emailCadences->where('date_string',  $now)->each(function($emailCadence) {
+                 $emailCadences->each(function($emailCadence) {
                     $template = EmailTemplate::findorfail($emailCadence->email_template_id);
                     if($emailCadence->delivered == 'NO')
                     {
