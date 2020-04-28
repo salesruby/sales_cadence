@@ -40,15 +40,13 @@ class SMS extends Command
 
     }
 
-    public function send($lead, $message){
-        $phone = $lead->phone;
-
+    public function send($leadPhone, $message){
         $post_data=array(
             'sub_account'=>'7979_slc',
             'sub_account_pass'=>'slc2020',
             'action'=>'send_sms',
             'sender_id'=>'SalesRuby',
-            'recipients'=> $phone,
+            'recipients'=> $leadPhone,
             'message'=>$message,
             'route' => 2
         );

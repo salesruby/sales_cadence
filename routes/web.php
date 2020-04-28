@@ -42,11 +42,13 @@ Route::group(['middleware' => ['user']], function(){
     Route::get('/add-cadence', 'CadenceController@addCadence')->name('add.cadence');
     Route::post('/add-cadence', 'CadenceController@saveCadence')->name('add.cadence');
 
-    
+    //SMS Template
+    Route::resource('sms', 'SmsTemplateController');
 
     Route::get('/add-step/{masked_id}', 'CadenceController@step')->name('step');
     Route::get('/update-step/{masked_id}', 'CadenceController@updatestep')->name('update.step');
                                                                     
+
     Route::post('/email-step/{id}', 'EmailCadenceController@addStep')->name('email.step');
 
     Route::post('/sms-step/{id}', 'SmsCadenceController@addStep')->name('sms.step');
@@ -54,6 +56,7 @@ Route::group(['middleware' => ['user']], function(){
     Route::post('/save-cadence/{id}', 'CadenceController@saveAllCadence')->name('saveCadence');
 
     Route::get('/cadence-list', 'CadenceController@allcadence')->name('my.cadence');
+
     //LEAD ROUTES
     Route::get('leads/upload', 'LeadController@upload')->name('leads.upload');
     Route::post('leads/upload/post', 'LeadController@uploadPost')->name('leads.upload.post');

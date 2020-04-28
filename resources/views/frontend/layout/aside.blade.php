@@ -36,6 +36,16 @@
                                     <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="{{route('sms.create')}}">
+                                        <i class="fas fa-table"></i>Add Template</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('sms.index')}}">
+                                        <i class="far fa-check-square"></i>Template List</a>
+                                </li>
+                            </ul>
                         </li>
 
                         <li class="has-sub">

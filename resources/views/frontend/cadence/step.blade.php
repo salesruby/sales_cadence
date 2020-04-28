@@ -1,5 +1,63 @@
 @extends('frontend.layout.app')
+@section('content')
+    <div class="container">
+        @if(Session::has('error'))
+            <div class="alert alert-danger">
+                {{Session::get('error')}}
+            </div>
+        @endif
+        @if(Session::has('success'))
 
+            <div class="alert alert-success">
+                {{Session::get('error')}}
+
+            </div>
+        @endif
+        <div class="row m-auto pt-3">
+            <form action="{{route('saveCadence', $cadence->id)}}" method="post">
+                @csrf
+                <?php $i = 1;?>
+                <?php $templates = App\EmailTemplate::whereUser_id(Sentinel::getUser()->id)->get();
+                $smsTemplates = App\SmsTemplate::whereUser_id(Sentinel::getUser()->id)->get();
+                ?>
+                @forelse($emailCadence as $email)
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Cadence Type</th>
+                                    <th>Template</th>
+                                    <th>Date to Schedule</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+
+                                <tr>
+                                    <td>{{$i++}}</td>
+                                    <td>Email Cadence</td>
+                                    <td><select name="{{$email->temp}}" class="form-control">
+                                            @forelse($templates as $template)
+                                                <option value="{{$template->id}}">{{$template->name}}</option>
+                                            @empty
+                                                Please create a template first
+                                            @endforelse
+                                        </select></td>
+                                    <td><input type="datetime-local" name="date[{{$email->id}}]" required></td>
+
+
+                                </tr>
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                    </div>
+                @empty
+
+                @endforelse
 
 @section('content')
 <div class="container">
@@ -156,97 +214,92 @@ $smsTemplates = App\SmsTemplate::whereUser_id(Sentinel::getUser()->id)->get();
                                                        <span>
                                                                 <a href="#">{{$lead->email}}</a>
                                                             </span>
-                                                    </td>
-                                                    <td>
+                                        </td>
+                                        <td>
                                                        <span>
                                                                 <a href="#">{{$lead->phone}}</a>
                                                             </span>
-                                                    </td>
-                                                    <td>
+                                        </td>
+                                        <td>
                                                         <span class="more">
 
                                                         </span>
-                                                    </td>
-                                                </tr>
-                                                @empty
-                                                You have not added any lead
-                                                @endforelse
+                                        </td>
+                                    </tr>
+                                @empty
+                                    You have not added any lead
+                                @endforelse
 
 
-
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="user-data__footer">
-                                        <button class="au-btn au-btn-load">Execute Cadence</button>
-                                    </div>
-                                </div>
-
-@endif
-</form>
-</div>
-</div>
-
-<div class="row mt-5">
-<div class="col-md-10">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <!-- <strong class="card-title mb-3">Add Step</strong> -->
-                                    </div>
-                                    <div class="card-body">
-
-                                    <button class="btn btn-success" data-toggle="modal" data-target="#staticModal">Add Step</button>
-
-                                    </div>
-                                </div>
-                            </div>
-</div>
-<div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true"
-			 data-backdrop="static">
-				<div class="modal-dialog modal-sm" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="staticModalLabel">Pick A Step</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <form action="{{route('email.step', $cadence->id)}}" method="post">
-                                    @csrf
-                            <button type="submit"><img src="{{asset('assets/images/mail.png')}}"></button>
-</form>
-</div>
-<div class="col-md-4">
-    <form action="{{route('sms.step', $cadence->id)}}" method="post">
-    @csrf
-                            <button id="close-image"><img src="{{asset('assets/images/sms.png')}}"></button>
-</form>
-                            </div>
-                            <div class="col-md-4">
-    <form>
-                            <button id="close-image"><img src="{{asset('assets/images/call.png')}}"></button>
-</form>
-                            </div>
-
-
+                                </tbody>
+                            </table>
                         </div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <!-- <button type="button" class="btn btn-primary">Confirm</button> -->
+                        <div class="user-data__footer">
+                            <button class="au-btn au-btn-load">Execute Cadence</button>
+                        </div>
+                    </div>
 
-						</div>
-					</div>
-				</div>
-			</div>
-</div>
+                @endif
+            </form>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <!-- <strong class="card-title mb-3">Add Step</strong> -->
+                </div>
+                <div class="card-body">
+
+                    <button class="btn btn-success" data-toggle="modal" data-target="#staticModal">Add Step</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
+         aria-hidden="true"
+         data-backdrop="static">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticModalLabel">Pick A Step</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form action="{{route('email.step', $cadence->id)}}" method="post">
+                                @csrf
+                                <button type="submit"><img src="{{asset('assets/images/mail.png')}}"></button>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <form action="{{route('sms.step', $cadence->id)}}" method="post">
+                                @csrf
+                                <button id="close-image"><img src="{{asset('assets/images/sms.png')}}"></button>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <form>
+                                <button id="close-image"><img src="{{asset('assets/images/call.png')}}"></button>
+                            </form>
+                        </div>
 
 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Confirm</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 @stop
 
 @section('script')

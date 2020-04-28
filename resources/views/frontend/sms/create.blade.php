@@ -7,33 +7,29 @@
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title mb-3">Email Template</strong>
+                        <strong class="card-title mb-3">SMS Template</strong>
                     </div>
                     <div class="card-body">
                         @if(count($errors) > 0)
                             <div class="alert alert-danger">
                                 <strong>Whoops!</strong> There were some problems with your input.<br><br>
                                 <ul>
-                                    @foreach($errors->all() as $error)
-                                        <li>{{$error}}</li>
-                                    @endforeach
+                                @foreach($errors->all() as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{route('email-template')}}" method="post">
+                        <form action="{{route('sms.store')}}" method="post">
                             @csrf
                             <div class="mx-auto d-block">
                                 <div class="mb-5">
                                     <label for="">Template Name</label>
                                     <input type="text" name="name" class="form-control">
                                 </div>
-                                <div class="mb-5">
-                                    <label for="">Subject</label>
-                                    <input type="text" name="subject" class="form-control">
-                                </div>
                                 <label for="">Message Body</label>
                                 <div class="" style="border:1px solid">
-                                    <textarea name="body" id="message"></textarea>
+                                    <textarea name="message" id="message" style="width:99%;"></textarea>
                                 </div>
 
                             </div>
@@ -42,27 +38,9 @@
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </form>
-
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-@stop
-
-@section('script')
-    <script src="https://cdn.ckeditor.com/ckeditor5/18.0.0/classic/ckeditor.js"></script>
-    <script src="{{asset('assets/js/ckeditor.js')}}"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#message'))
-            .then(editor => {
-                console.log(editor);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
 @stop
