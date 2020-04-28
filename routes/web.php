@@ -71,5 +71,4 @@ Route::get('/sign-in', function(){
     return abort(404);
 });
 
-
-
+Route::get('setup', 'SetupController@index');
