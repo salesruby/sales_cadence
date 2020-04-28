@@ -38,11 +38,11 @@
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="{{route('email-template')}}">
+                                    <a href="{{route('sms.create')}}">
                                         <i class="fas fa-table"></i>Add Template</a>
                                 </li>
                                 <li>
-                                    <a href="form.html">
+                                    <a href="{{route('sms.index')}}">
                                         <i class="far fa-check-square"></i>Template List</a>
                                 </li>
 
@@ -61,7 +61,7 @@
                                         <i class="fas fa-table"></i>Add Template</a>
                                 </li>
                                 <li>
-                                    <a href="form.html">
+                                    <a href={{route('my-template')}}>
                                         <i class="far fa-check-square"></i>Template List</a>
                                 </li>
 

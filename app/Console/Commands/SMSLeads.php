@@ -41,22 +41,21 @@ class SMSLeads extends SMS
     public function handle()
     {
         $now = date('Y-m-d H:i', strtotime(Carbon::now()->addHour()));
-        $smsCadence = SmsCadence::all();
-        if($smsCadence !== null){
-            $smsCadence->where('date_string', '<', $now)->each(function ($smsCadence){
-                $template = SmsTemplate::findorfail($smsCadence->sms_template_id);
-                if($smsCadence->delivered == 'NO')
-                {
-                    $leads = LeadSmsCadence::where('sms_cadence_id', $smsCadence->id)->get();
-
-                    foreach($leads as $lead) {
-                        $leadName = $lead['lead']->first_name . ' ' .  $lead['lead']->last_name;
-                        $message = str_replace('[name]', $leadName, $template->message);
-                        $this->send($lead, $message);
-                    }
-                    $smsCadence->update(['delivered' => 'YES']);
+        $smsCadence = SmsCadence::where([
+            ['date', '<', $now],
+            ['delivered', 0],
+        ])->get();
+        if ($smsCadence !== null) {
+            foreach($smsCadence as $cadence) {
+                $template = SmsTemplate::findorfail($cadence->sms_template_id);
+                $leads = LeadSmsCadence::where('sms_cadence_id', $cadence->id)->get();
+                foreach($leads as $lead){
+                    $leadName = $lead['lead']->first_name . ' ' . $lead['lead']->last_name;
+                    $message = str_replace('[name]', $leadName, $template->message);
+                    $this->send($lead['lead']->phone, $message);
                 }
-            });
+//                $cadence->update(['delivered' => 1]);
+            }
         }
     }
 }
