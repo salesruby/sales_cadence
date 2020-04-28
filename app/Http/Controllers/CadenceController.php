@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\LeadSmsCadence;
 use Illuminate\Http\Request;
 use App\Cadence;
 use App\EmailCadence;
@@ -85,15 +86,15 @@ class CadenceController extends Controller
 
 
             foreach ($request->leads as $key => $value) {
-                $leadmail = new LeadMailCadence;
-                $leadmail->user_id = $key;
-                $leadmail->cadence_id = $id;
-                $leadmail->email_cadence_id = $email->id;
-                $leadmail->save();
+                $leadSms = new LeadSmsCadence;
+                $leadSms->user_id = $key;
+                $leadSms->cadence_id = $id;
+                $leadSms->sms_cadence_id = $sms->id;
+                $leadSms->save();
             }
         }
 
-        return redirect(route('my.cadence'))->with('success', 'cadence scheduled successfully');
+        return redirect(route('my.cadence'))->with('success', 'Cadence scheduled successfully');
         //dd($request->all());
 
 //  $cadence = Cadence::findorfail($id);

@@ -3,44 +3,40 @@
     <div class="container">
         <div class="row mt-5">
             <div class="col-md-10">
+                @if($message = Session::get('success'))
+                    <div class="alert alert-success">
+                        <p>{{$message}}</p>
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title mb-3">Email Template List</strong>
+                        <strong class="card-title mb-3">SMS Template List</strong>
                     </div>
-                    @if($message = Session::get('success'))
-                        <div class="alert alert-success">
-                            <p>{{$message}}</p>
-                        </div>
-                    @endif
                     <div class="card-body">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th>Template Name</th>
-                                <th>Template Subject</th>
-                                <th>Template Body</th>
+                                <th>Template Message</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($template as $temp)
+                            @foreach($template as $temp)
                                 <tr>
                                     <td>{{$temp->name}}</td>
-                                    <td>{{$temp->subject}}</td>
-                                    <td>{!!$temp->body!!}</td>
+                                    <td>{{$temp->message}}</td>
                                     <td><a href="" class="btn btn-primary">Preview template</a></td>
                                 </tr>
-                            @empty
-                            @endforelse
+                            @endforeach
 
                             </tbody>
                         </table>
-
                     </div>
+                    {{$template->links()}}
                 </div>
             </div>
         </div>
-
     </div>
 @stop
 

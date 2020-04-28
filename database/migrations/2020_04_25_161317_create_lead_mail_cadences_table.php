@@ -17,7 +17,7 @@ class CreateLeadMailCadencesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('cadence_id');
-            $table->integer('sms_cadence_id');
+            $table->integer('email_cadence_id');
             $table->timestamps();
         });
     }
