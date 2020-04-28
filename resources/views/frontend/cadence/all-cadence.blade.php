@@ -81,7 +81,7 @@
                                     </td>
                                     <td class="desc">{{$user->first_name}} {{$user->last_name}}</td>
                                     <td>
-                                        <span class="status--process">Processed</span>
+                                        <span class="status--process"><a href="{{route('update.step', $cadence->masked_id)}}">Update Cadence</a></span>
                                     </td>
                                     <!-- <td>
 

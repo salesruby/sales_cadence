@@ -54,6 +54,7 @@
 
 @section('script')
     <script src="https://cdn.ckeditor.com/ckeditor5/18.0.0/classic/ckeditor.js"></script>
+    <script src="{{asset('assets/js/ckeditor.js')}}"></script>
     <script>
         ClassicEditor
             .create(document.querySelector('#message'))

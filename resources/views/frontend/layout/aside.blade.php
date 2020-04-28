@@ -61,7 +61,7 @@
                                         <i class="fas fa-table"></i>Add Template</a>
                                 </li>
                                 <li>
-                                    <a href={{route('my-template')}}>
+                                    <a href="{{route('my-template')}}">
                                         <i class="far fa-check-square"></i>Template List</a>
                                 </li>
 
