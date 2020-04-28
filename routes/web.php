@@ -34,6 +34,10 @@ Route::group(['middleware' => ['user']], function(){
 
     Route::post('/add-email-template', 'EmailTemplateController@save')->name('email-template');
 
+    Route::patch('/edit-email-template/{id}', 'EmailTemplateController@edit')->name('edit.email.template');
+
+    Route::get('/edit-email-template/{id}', 'EmailTemplateController@editPage')->name('edit.email.template');
+
     Route::get('/my-template', 'EmailTemplateController@allTemplate')->name('my-template');
     Route::get('/add-cadence', 'CadenceController@addCadence')->name('add.cadence');
     Route::post('/add-cadence', 'CadenceController@saveCadence')->name('add.cadence');
@@ -41,6 +45,7 @@ Route::group(['middleware' => ['user']], function(){
     
 
     Route::get('/add-step/{masked_id}', 'CadenceController@step')->name('step');
+    Route::get('/update-step/{masked_id}', 'CadenceController@updatestep')->name('update.step');
                                                                     
     Route::post('/email-step/{id}', 'EmailCadenceController@addStep')->name('email.step');
 

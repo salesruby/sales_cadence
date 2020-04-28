@@ -137,6 +137,13 @@ class CadenceController extends Controller
 
 
 // }
+    public function updatestep($masked_id){
+    $cadence = Cadence::whereMasked_id($masked_id)->whereUser_id(Sentinel::getUser()->id)->first();
+    $leads = Lead::whereUser_id(Sentinel::getUser()->id)->get();
+    $emailCadence = EmailCadence::whereCadence_id($cadence->id)->get();
+    $smsCadence = SmsCadence::whereCadence_id($cadence->id)->get();
+    return view('frontend.cadence.update-step')->with('emailCadence', $emailCadence)->with('smsCadence', $smsCadence)->with('cadence', $cadence)->with('leads', $leads);
+}
 
     public function allcadence()
     {

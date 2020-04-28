@@ -33,4 +33,15 @@ return redirect(route('my-template'))->with('success', 'template created success
         $emailTemplate = EmailTemplate::whereUser_id(Sentinel::getUser()->id)->orderBy('id', 'desc')->get();
         return view('frontend.template.all-template')->with('template', $emailTemplate);
     }
+
+    public function edit(Request $request, $id){
+        $emailTemplate = EmailTemplate::findorfail($id);
+        $emailTemplate->update($request->all());
+        return redirect(route('my-template'))->with('success', 'Template updated successfully');
+    }
+
+    public function editPage($id){
+        $emailTemplate = EmailTemplate::findorfail($id);
+return view('frontend.template.editTemplate')->with('emailTemplate', $emailTemplate);
+    }
 }

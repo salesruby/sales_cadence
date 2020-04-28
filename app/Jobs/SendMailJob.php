@@ -8,6 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Mail;
+use App\Mail\EmailLead;
 
 class SendMailJob implements ShouldQueue
 {
@@ -34,12 +35,13 @@ class SendMailJob implements ShouldQueue
      */
     public function handle()
     {
-      return Mail::send([], [], function ($message) {
-          $message->to($this->email)
-          ->subject($this->sub)
-          ->from('hannah.okwelum@salesruby.com')
+      return Mail::to($this->email)->send(new EmailLead($this->sub, $this->body));
+    //   Mail::send([], [], function ($message) {
+    //       $message->to($this->email)
+    //       ->subject($this->sub)
+    //       ->from('hannah.okwelum@salesruby.com')
          
-          ->setBody($this->body, 'text/html'); // for HTML rich messages
-      });
+    //       ->setBody($this->body, 'text/html'); // for HTML rich messages
+    //   });
     }
 }

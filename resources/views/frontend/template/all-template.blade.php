@@ -4,7 +4,11 @@
 @section('content')
 <div class="container">
 
-
+@if(Session::has('success'))
+<div class="alert alert-success">
+{{Session::get('success')}}
+</div>
+@endif
 <div class="row mt-5">
 <div class="col-md-10">
                                 <div class="card">
@@ -27,7 +31,7 @@
                                               <td>{{$temp->name}}</td>
                                               <td>{{$temp->subject}}</td>
                                               <td>{!!$temp->body!!}</td>
-                                              <td><a href="" class="btn btn-primary">Preview template</a></td>
+                                              <td><a href="{{route('edit.email.template', $temp->id)}}" class="btn btn-primary">Edit template</a></td>
                                           </tr>
                                           @empty
                                           @endforelse
