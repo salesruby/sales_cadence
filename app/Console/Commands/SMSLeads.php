@@ -54,7 +54,7 @@ class SMSLeads extends SMS
                     $message = str_replace('[name]', $leadName, $template->message);
                     $this->send($lead['lead']->phone, $message);
                 }
-//                $cadence->update(['delivered' => 1]);
+                $cadence->update(['delivered' => 1]);
             }
         }
     }

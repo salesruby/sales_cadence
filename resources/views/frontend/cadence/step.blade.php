@@ -59,158 +59,97 @@
 
                 @endforelse
 
-@section('content')
-<div class="container">
-@if(Session::has('error'))
-    <div class="alert alert-danger">
-  {{Session::get('error')}}
-    </div>
-    @endif
 
-    @if(Session::has('success'))
+                @forelse($smsCadence as $sms)
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Cadence Type</th>
+                                    <th>Template</th>
+                                    <th>Date to Schedule</th>
+                                </tr>
+                                </thead>
 
-    <div class="alert alert-success mt-3">
-  {{Session::get('success')}}
+                                <tbody>
 
-    </div>
-    @endif
-<div class="row m-auto pt-3">
-<form action="{{route('saveCadence', $cadence->id)}}" method="post">
-@csrf
-<?php $i = 1;?>
-<?php $templates = App\EmailTemplate::whereUser_id(Sentinel::getUser()->id)->get();
-$smsTemplates = App\SmsTemplate::whereUser_id(Sentinel::getUser()->id)->get();
-?>
-@forelse($emailCadence as $email)
-<div class="card">
-<div class="card-body">
-    <table class="table table-bordered">
-<thead><tr>
-    <th>S/N</th>
-    <th>Cadence Type</th>
-    <th>Template</th>
-    <th>Date to Schedule</th>
-</tr></thead>
-
-<tbody>
-
-<tr>
-    <td>{{$i++}}</td>
-    <td>Email Cadence</td>
-    <td><select name="{{$email->temp}}" class="form-control">
-        @forelse($templates as $template)
-        <option value="{{$template->id}}">{{$template->name}}</option>
-        @empty
-        Please create a template first
-        @endforelse
-    </select></td>
-    <td><input type="datetime-local" value="@if($email->date_string !== null){{Carbon\Carbon::parse($email->date_string)->format('Y-m-d\TH:i')}}@endif" name="date[{{$email->id}}]" required></td>
+                                <tr>
+                                    <td>{{$i++}}</td>
+                                    <td>SMS Cadence</td>
+                                    <td><select name="{{$sms->temp}}" class="form-control">
+                                            @forelse($smsTemplates as $template)
+                                                <option value="{{$template->id}}">{{$template->name}}</option>
+                                            @empty
+                                                Please create a template first
+                                            @endforelse
+                                        </select></td>
+                                    <td><input type="datetime-local" name="date[{{$sms->id}}]" required></td>
 
 
-</tr>
-</tbody>
+                                </tr>
+                                </tbody>
 
 
+                            </table>
+                        </div>
+                    </div>
+                @empty
 
+                @endforelse
+                @if(count($emailCadence) > 0 || count($smsCadence) > 0)
 
-</table>
-</div>
-</div>
-@empty
+                    <div class="user-data m-b-30">
+                        <h3 class="title-3 m-b-30">
+                            <i class="zmdi zmdi-account-calendar"></i>My Leads</h3>
+                        {{-- <div class="filters m-b-45">
+                        <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
+                            <select class="js-select2 select2-hidden-accessible" name="property" tabindex="-1" aria-hidden="true">
+                                <option selected="selected">All Properties</option>
+                                <option value="">Products</option>
+                                <option value="">Services</option>
+                            </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 127px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-property-ld-container"><span class="select2-selection__rendered" id="select2-property-ld-container" title="All Properties">All Properties</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                        <div class="rs-select2--dark rs-select2--sm rs-select2--border">
+                            <select class="js-select2 au-select-dark select2-hidden-accessible" name="time" tabindex="-1" aria-hidden="true">
+                                <option selected="selected">All Time</option>
+                                <option value="">By Month</option>
+                                <option value="">By Day</option>
+                            </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 98px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-time-sl-container"><span class="select2-selection__rendered" id="select2-time-sl-container" title="All Time">All Time</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                        </div> --}}
+                        <div class="table-responsive table-data">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <td>
+                                        {{-- <label class="au-checkbox">
+                                                <input type="checkbox">
+                                                <span class="au-checkmark"></span>
+                                        </label> --}}
+                                    </td>
+                                    <td>Lead Name</td>
+                                    <td>Email</td>
+                                    <td>Phone</td>
+                                    <td></td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @forelse($leads as $lead)
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" value="1" name="leads[{{$lead->id}}]"/>
+                                        </td>
+                                        <td>
+                                            <div class="table-data__info">
+                                                <h6>{{$lead->first_name}} {{$lead->last_name}}</h6>
 
-@endforelse
-
-
-@forelse($smsCadence as $sms)
-<div class="card">
-<div class="card-body">
-    <table class="table table-bordered">
-<thead><tr>
-    <th>S/N</th>
-    <th>Cadence Type</th>
-    <th>Template</th>
-    <th>Date to Schedule</th>
-</tr></thead>
-
-<tbody>
-
-<tr>
-    <td>{{$i++}}</td>
-    <td>SMS Cadence</td>
-    <td><select name="{{$sms->temp}}" class="form-control">
-        @forelse($smsTemplates as $template)
-        <option value="{{$template->id}}">{{$template->name}}</option>
-        @empty
-        Please create a template first
-        @endforelse
-    </select></td>
-    <td><input type="datetime-local" name="date[{{$sms->id}}]" required></td>
-
-
-</tr>
-</tbody>
-
-
-
-
-</table>
-</div>
-</div>
-@empty
-
-@endforelse
-@if(count($emailCadence) > 0 || count($smsCadence) > 0)
-
-<div class="user-data m-b-30">
-                                    <h3 class="title-3 m-b-30">
-                                        <i class="zmdi zmdi-account-calendar"></i>My Leads</h3>
-										{{-- <div class="filters m-b-45">
-                                        <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
-                                            <select class="js-select2 select2-hidden-accessible" name="property" tabindex="-1" aria-hidden="true">
-                                                <option selected="selected">All Properties</option>
-                                                <option value="">Products</option>
-                                                <option value="">Services</option>
-                                            </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 127px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-property-ld-container"><span class="select2-selection__rendered" id="select2-property-ld-container" title="All Properties">All Properties</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                        <div class="rs-select2--dark rs-select2--sm rs-select2--border">
-                                            <select class="js-select2 au-select-dark select2-hidden-accessible" name="time" tabindex="-1" aria-hidden="true">
-                                                <option selected="selected">All Time</option>
-                                                <option value="">By Month</option>
-                                                <option value="">By Day</option>
-                                            </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 98px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-time-sl-container"><span class="select2-selection__rendered" id="select2-time-sl-container" title="All Time">All Time</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-										</div> --}}
-                                    <div class="table-responsive table-data">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <td>
-													{{-- <label class="au-checkbox">
-                                                            <input type="checkbox">
-                                                            <span class="au-checkmark"></span>
-													</label> --}}
-                                                    </td>
-                                                    <td>Lead Name</td>
-                                                    <td>Email</td>
-                                                    <td>Phone</td>
-                                                    <td></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            @forelse($leads as $lead)
-                                                <tr>
-                                                    <td>
-                                                        <input type="checkbox" value="1" name="leads[{{$lead->id}}]"/>
-                                                    </td>
-                                                    <td>
-                                                        <div class="table-data__info">
-                                                            <h6>{{$lead->first_name}} {{$lead->last_name}}</h6>
-
-                                                        </div>
-                                                    </td>
-                                                    <td>
+                                            </div>
+                                        </td>
+                                        <td>
                                                        <span>
                                                                 <a href="#">{{$lead->email}}</a>
                                                             </span>
@@ -298,7 +237,6 @@ $smsTemplates = App\SmsTemplate::whereUser_id(Sentinel::getUser()->id)->get();
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @stop
 
