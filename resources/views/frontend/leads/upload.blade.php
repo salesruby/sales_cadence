@@ -38,6 +38,9 @@
                         </div>
                     </div>
                 </form>
+                <div class="text-center">
+                    Download <a href="https://sales.salesruby.com/example.xlsx" download  rel="noopener noreferrer">Excel format</a>
+                </div>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@
                     <div class="col-md-12">
                         @if($message = Session::get('success'))
                             <div class="alert alert-success">
-                                Update Successful
+                                {{$message}}
                             </div>
                          @endif
                         <!-- DATA TABLE -->

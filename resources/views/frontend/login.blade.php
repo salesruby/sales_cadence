@@ -42,8 +42,8 @@
                 <div class="login-wrap">
                     <div class="login-content">
                         <div class="login-logo">
-                            <a href="#">
-                                <img src="images/icon/logo.png" alt="CoolAdmin">
+                            <a href="https://salesruby.com">
+                                <img src={{url('https://salesruby.com/sales_ruby.png')}} alt="CoolAdmin">
                             </a>
                         </div>
                         <div class="login-form">
@@ -66,7 +66,7 @@
                                     </label> -->
                                 </div>
                                 <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
-                              
+
                             </form>
                             <div class="register-link">
                                 <p>

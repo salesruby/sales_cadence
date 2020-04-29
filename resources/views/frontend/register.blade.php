@@ -46,14 +46,13 @@
                 <div class="login-wrap">
                     <div class="login-content">
                         <div class="login-logo">
-                            <a href="#">
-                                <img src="images/icon/logo.png" alt="CoolAdmin">
+                            <a href="https://salesruby.com">
+                                <img src={{url('https://salesruby.com/sales_ruby.png')}} alt="CoolAdmin">
                             </a>
                         </div>
                         @foreach($errors->all() as $error)
                         <div class="alert alert-danger">
                          {{$error}}
-
                         </div>
                         @endforeach
                         <div class="login-form">

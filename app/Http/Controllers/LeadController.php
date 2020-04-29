@@ -139,6 +139,7 @@ class LeadController extends Controller
         $fileName = time(). '.' .$request->file->extension();
         $request->file->move(public_path('uploads'), $fileName);
 
+        dd('uploads/'.$fileName);
         Excel::import(new LeadsImport, 'uploads/'.$fileName);
 
         return redirect()->route('leads.index')
