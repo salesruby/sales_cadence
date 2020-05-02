@@ -61,8 +61,7 @@
                                     </th>
                                     <th>name</th>
                                     <th>email</th>
-                                    <th>description</th>
-                                    <th>status</th>
+                                    <th>phone</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -79,10 +78,7 @@
                                     <td>
                                         <span class="block-email">{{$lead->email}}</span>
                                     </td>
-                                    <td class="desc">Samsung S8 Black</td>
-                                    <td>
-                                        <span class="status--process">Processed</span>
-                                    </td>
+                                    <td class="desc">{{$lead->phone}}</td>
                                     <td>
                                         <div class="table-data-feature">
                                             <form method="POST" action={{route('leads.destroy', $lead->id)}} class="table-data-feature">

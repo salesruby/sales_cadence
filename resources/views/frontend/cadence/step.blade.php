@@ -14,6 +14,10 @@
             </div>
         @endif
         <div class="row m-auto pt-3">
+            <div style="margin: 0px 30px 30px 30px;">
+                <button class="btn btn-success" data-toggle="modal" data-target="#staticModal">Add Step</button>
+            </div>
+
             <form action="{{route('saveCadence', $cadence->id)}}" method="post">
                 @csrf
                 <?php $i = 1;?>
@@ -183,20 +187,6 @@
         </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-header">
-                    <!-- <strong class="card-title mb-3">Add Step</strong> -->
-                </div>
-                <div class="card-body">
-
-                    <button class="btn btn-success" data-toggle="modal" data-target="#staticModal">Add Step</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
          aria-hidden="true"
          data-backdrop="static">

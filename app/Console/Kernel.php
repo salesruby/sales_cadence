@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->command('mail:leads')
-            ->everyMinute()->withoutOverlapping();
+            ->everyFiveMinutes()->withoutOverlapping();
         $schedule->command('sms:leads')
             ->everyFiveMinutes();
     }

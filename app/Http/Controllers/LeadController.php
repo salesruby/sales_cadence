@@ -25,7 +25,7 @@ class LeadController extends Controller
     public function index()
     {
         $user = Sentinel::getUser()->id;
-        $leads = Lead::latest()->paginate(5);
+        $leads = Lead::where('user_id', $user)->latest()->paginate(5);
         return view('frontend.leads.index', compact('leads'));
     }
 
